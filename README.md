@@ -1,3 +1,8 @@
+# Apis details
+
+Please use below postman link to see api details exposed by this cake php app
+https://documenter.getpostman.com/view/7978445/TW6tLpmN
+
 # CakePHP Application Skeleton
 
 [![Build Status](https://img.shields.io/travis/cakephp/app/master.svg?style=flat-square)](https://travis-ci.org/cakephp/app)
