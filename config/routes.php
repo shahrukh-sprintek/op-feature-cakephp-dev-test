@@ -108,5 +108,6 @@ Router::scope('/api', function (RouteBuilder $routes) {
     $routes->connect('/get/categories/:limitPerPage/:page', ['controller' => 'AppCategories', 'action' => 'getCategories', 'isRest' => true]);
     $routes->connect('/get/prank/categories', ['controller' => 'AppCategories', 'action' => 'getPrankCategories', 'isRest' => true]);
     $routes->connect('/get/category/pranks/slug/:slug', ['controller' => 'AppCategories', 'action' => 'getCategoryPranksBySlug', 'isRest' => true]);
+    $routes->connect('/get/category/pranks/:categorySlug/:prankSlug/:recordsPerPage/:pageNumber', ['controller' => 'AppCategories', 'action' => 'getPranksBySlug', 'isRest' => true]);
     // Connect API actions here.
 });
