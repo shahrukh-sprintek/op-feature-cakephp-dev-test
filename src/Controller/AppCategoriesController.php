@@ -70,7 +70,7 @@ class AppCategoriesController extends RestController
     //get category by slug with pranks as well
     public function getCategoryPranksBySlug()
     {
-        $slug = $this->request->params['slug'];
+        $slug = $this->request->getParam(['slug']);
         $appCategoriesTable = TableRegistry::get('AppCategories');
         $categories = $appCategoriesTable->find()
         ->where(['AppCategories.slug ' => $slug])
@@ -92,11 +92,11 @@ class AppCategoriesController extends RestController
     //get pranks by slug in particular category(also found by slug)
     public function getPranksBySlug()
     {
-        $categorySlug = $this->request->params['categorySlug'];
-        $prankSlug = $this->request->params['prankSlug'];
+        $categorySlug = $this->request->getParam(['categorySlug']);
+        $prankSlug = $this->request->getParam(['prankSlug']);
         $this->prankSlug = '%'.$prankSlug.'%';
-        $this->recordsPerPage = $this->request->params['recordsPerPage'];
-        $this->pageNumber = $this->request->params['pageNumber'];
+        $this->recordsPerPage = $this->request->getParam(['recordsPerPage']);
+        $this->pageNumber = $this->request->getParam(['pageNumber']);
 
         //temp count for total pranks in found table
         $appCategoriesTable = TableRegistry::get('AppCategories');
