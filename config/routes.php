@@ -105,9 +105,10 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 Router::scope('/api', function (RouteBuilder $routes) {
     // No $routes->applyMiddleware() here.
-    $routes->connect('/get/categories/:limitPerPage/:page', ['controller' => 'AppCategories', 'action' => 'getCategories', 'isRest' => true]);
-    $routes->connect('/get/prank/categories', ['controller' => 'AppCategories', 'action' => 'getPrankCategories', 'isRest' => true]);
-    $routes->connect('/get/category/pranks/slug/:slug', ['controller' => 'AppCategories', 'action' => 'getCategoryPranksBySlug', 'isRest' => true]);
-    $routes->connect('/get/category/pranks/:categorySlug/:prankSlug/:recordsPerPage/:pageNumber', ['controller' => 'AppCategories', 'action' => 'getPranksBySlug', 'isRest' => true]);
+    $routes->connect('/get/token/:username/:password', ['controller' => 'AppCategories', 'action' => 'auth', 'isRest' => true]);
+    $routes->connect('/get/categories/:limitPerPage/:page', ['controller' => 'AppCategories', 'action' => 'getCategories', 'isRest' => true, 'requireAuthorization' => true]);
+    $routes->connect('/get/prank/categories', ['controller' => 'AppCategories', 'action' => 'getPrankCategories', 'isRest' => true, 'requireAuthorization' => true]);
+    $routes->connect('/get/category/pranks/slug/:slug', ['controller' => 'AppCategories', 'action' => 'getCategoryPranksBySlug', 'isRest' => true, 'requireAuthorization' => true]);
+    $routes->connect('/get/category/pranks/:categorySlug/:prankSlug/:recordsPerPage/:pageNumber', ['controller' => 'AppCategories', 'action' => 'getPranksBySlug', 'isRest' => true, 'requireAuthorization' => true]);
     // Connect API actions here.
 });

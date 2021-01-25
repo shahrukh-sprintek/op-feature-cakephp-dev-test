@@ -24,6 +24,23 @@ class AppCategoriesController extends RestController
         $this->loadComponent('Paginator');
     }
 
+    public function auth()
+    {
+        $payload['username'] = $this->request->getParam(['username']);
+        $payload['password'] = $this->request->getParam(['password']);
+
+        if($payload['username'] == 'ownage' && $payload['password'] == 'secret'){
+            $token = \Rest\Utility\JwtToken::generate($payload);
+
+            $this->set(compact('token'));
+        }else{
+            $message = 'invalid username or password';
+            $this->set(compact('message'));
+        }
+
+
+    }
+
     public function getCategories()
     {
         $recordLimit = $this->request->getParam(['limitPerPage']);
