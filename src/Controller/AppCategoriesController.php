@@ -26,8 +26,8 @@ class AppCategoriesController extends RestController
 
     public function getCategories()
     {
-        $recordLimit = $this->request->params['limitPerPage'];
-        $pageNumber = $this->request->params['page'];
+        $recordLimit = $this->request->getParam(['limitPerPage']);
+        $pageNumber = $this->request->getParam(['page']);
         
         
         $appCategoriesTable = TableRegistry::get('AppCategories');
