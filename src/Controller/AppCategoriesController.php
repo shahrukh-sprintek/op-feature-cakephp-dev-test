@@ -87,23 +87,42 @@ class AppCategoriesController extends RestController
     //get category by slug with pranks as well
     public function getCategoryPranksBySlug()
     {
-        $slug = $this->request->getParam(['slug']);
+        $categorySlug = $this->request->getParam(['slug']);
+        $this->recordsPerPage = $this->request->getParam(['recordsPerPage']);
+        $pageNumber = $this->pageNumber = $this->request->getParam(['pageNumber']);
+
+        //temp count for total pranks in found table
         $appCategoriesTable = TableRegistry::get('AppCategories');
         $categories = $appCategoriesTable->find()
-        ->where(['AppCategories.slug ' => $slug])
+        ->where(['AppCategories.slug ' => $categorySlug])
         ->contain(['AppPrankScripts']);
         
-        $count = $categories->count();
-        
-        // $totalPages = ceil($count/$recordLimit);
-        // dump($totalPages);
-        
-        // $categories = $categories->limit($recordLimit)->page($pageNumber);
+        $pranks = array();
         
         foreach($categories as $category){
+            $pranks = $category->app_prank_scripts;
         }
+        
+        $count = count($pranks);
+        $totalPages = ceil($count/$this->recordsPerPage);
+        //end temp count for total pranks in found table
 
-        $this->set(compact(['categories']));
+        $appCategoriesTable = TableRegistry::get('AppCategories');
+        $categories = $appCategoriesTable->find()
+        ->where(['AppCategories.slug ' => $categorySlug])
+        ->contain('AppPrankScripts' , function (Query $q) {
+            $q->limit($this->recordsPerPage)->page($this->pageNumber);
+            return $q;
+        }
+        );
+        
+        $category = $categories; // just to send in response in category bcoz based on single category
+        
+        // foreach($categories as $category){
+        //     $pranks = $category->app_prank_scripts;
+        // }
+
+        $this->set(compact(['totalPages', 'pageNumber', 'count', 'category']));
     }
 
     //get pranks by slug in particular category(also found by slug)
