@@ -64,7 +64,7 @@ class AppCategoriesController extends RestController
             
         }
 
-        $this->set(compact(['totalPages', 'count', 'categories']));
+        $this->set(compact(['totalPages', 'pageNumber', 'count', 'categories']));
     }
 
     public function getPrankCategories()
@@ -113,7 +113,7 @@ class AppCategoriesController extends RestController
         $prankSlug = $this->request->getParam(['prankSlug']);
         $this->prankSlug = '%'.$prankSlug.'%';
         $this->recordsPerPage = $this->request->getParam(['recordsPerPage']);
-        $this->pageNumber = $this->request->getParam(['pageNumber']);
+        $pageNumber = $this->pageNumber = $this->request->getParam(['pageNumber']);
 
         //temp count for total pranks in found table
         $appCategoriesTable = TableRegistry::get('AppCategories');
@@ -153,6 +153,6 @@ class AppCategoriesController extends RestController
             $pranks = $category->app_prank_scripts;
         }
 
-        $this->set(compact(['totalPages', 'count', 'pranks']));
+        $this->set(compact(['totalPages', 'pageNumber', 'count', 'pranks']));
     }
 }
